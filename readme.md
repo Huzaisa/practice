@@ -13,5 +13,5 @@ Deleting a resource
 Note: pakailah framework express dan package pg untuk koneksi ke database
 
 11. Houses
-    id address owner_name num_rooms has_garden
-    Number String String Number Boolean
+    id : Number, address : Sring, owner_name : String, num_rooms : Number, has_garden : Boolean
+        
