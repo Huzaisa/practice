@@ -1,0 +1,17 @@
+POST http://localhost:3000/houses
+Content-Type: application/json
+
+{
+    "address":"jakarta",
+    "owner_name":"huzhiend",
+    "num_rooms": 2,
+    "has_garden": true
+}
+###
+GET http://localhost:3000/houses
+
+###
+GET http://localhost:3000/
+
+###
+GET http://localhost:3000/houses/2
