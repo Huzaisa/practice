@@ -15,3 +15,17 @@ GET http://localhost:3000/
 
 ###
 GET http://localhost:3000/houses/2
+
+###
+PUT  http://localhost:3000/houses/1
+Content-Type: application/json
+
+{
+     "address":"jakarta",
+    "owner_name":"huzhiend",
+    "num_rooms": 2,
+    "has_garden": false
+}
+
+###
+DELETE http://localhost:3000/houses/3

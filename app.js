@@ -56,6 +56,42 @@ app.post('/houses', async(req, res) => {
     }
 });
 
+
+app.put('/houses/:id', async(req, res) => {
+    const id = req.params.id;
+    const { address, owner_name, num_rooms, has_garden } = req.body;
+    try {
+        const updatedHouse = await pool.query(
+            'UPDATE houses SET address = $1, owner_name = $2, num_rooms = $3, has_garden = $4 WHERE id = $5 RETURNING *', [address, owner_name, num_rooms, has_garden, id]
+        );
+        if (updatedHouse.rows.length === 0) {
+            res.status(404).json({ error: 'not found' });
+        } else {
+            res.json({ data: updatedHouse.rows[0] });
+        }
+    } catch (error) {
+        console.error('Error updating :', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
+app.delete('/houses/:id', async(req, res) => {
+    const id = req.params.id;
+    try {
+        const deletedHouse = await pool.query('DELETE FROM houses WHERE id = $1 RETURNING *', [id]);
+        if (deletedHouse.rows.length === 0) {
+            res.status(404).json({ error: 'not found' });
+        } else {
+            res.json({ message: 'deleted successfully' });
+        }
+    } catch (error) {
+        console.error('Error deleting house:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
 app.listen(port, () => {
     console.log('app listening on port', port);
 });
