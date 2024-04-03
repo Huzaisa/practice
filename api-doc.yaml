@@ -1,0 +1,178 @@
+openapi: 3.0.1
+info:
+  title: House API
+  description: API untuk mengelola data rumah
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /houses:
+    post:
+      summary: Menambahkan rumah baru
+      description: Menambahkan rumah baru ke dalam sistem.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/AddHouse"
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/House"
+                  - type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+        '500':
+          description: Server error
+    get:
+      summary: Mendapatkan semua rumah
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/House"
+  /houses/{id}:
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Mendapatkan detail rumah
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/House"
+                  - type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+        '404':
+          description: Rumah tidak ditemukan
+        '500':
+          description: Server error
+    put:
+      summary: Memperbarui detail rumah
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/UpdateHouse"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/House"
+                  - type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+        '404':
+          description: Rumah tidak ditemukan
+        '500':
+          description: Server error
+    delete:
+      summary: Menghapus rumah
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Rumah berhasil dihapus
+        '404':
+          description: Rumah tidak ditemukan
+        '500':
+          description: Server error
+components:
+  schemas:
+    House:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        address:
+          type: string
+          example: Jakarta
+        owner_name:
+          type: string
+          example: Huzhiend
+        num_rooms:
+          type: integer
+          example: 2
+        has_garden:
+          type: boolean
+          example: true
+  requestBodies:
+    AddHouse:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+                example: Jakarta
+              owner_name:
+                type: string
+                example: Huzhiend
+              num_rooms:
+                type: integer
+                example: 2
+              has_garden:
+                type: boolean
+                example: true
+    UpdateHouse:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+                example: Jakarta
+              owner_name:
+                type: string
+                example: Huzhiend
+              num_rooms:
+                type: integer
+                example: 2
+              has_garden:
+                type: boolean
+                example: true

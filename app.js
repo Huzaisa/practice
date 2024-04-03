@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = 3000;
 
 const { Pool } = require('pg');
@@ -12,6 +13,8 @@ const pool = new Pool({
 });
 
 app.use(express.json());
+app.use(cors());
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -56,7 +59,7 @@ app.post('/houses', async(req, res) => {
     }
 });
 
-
+//penggunaan let/const nya sama aja kea yang post, hanya saja dibuat dalam satu line
 app.put('/houses/:id', async(req, res) => {
     const id = req.params.id;
     const { address, owner_name, num_rooms, has_garden } = req.body;
